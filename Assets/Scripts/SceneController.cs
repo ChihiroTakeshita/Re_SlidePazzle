@@ -1,24 +1,40 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    Fade fade;
+    public static SceneController scene { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        if(scene == null)
+        {
+            scene = this;
+            DontDestroyOnLoad(this.gameObject);
+            fade = Fade.fade;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     public void SceneChange(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        fade.FadeOut();
+        StartCoroutine(Wait(1.3f, () => {
+            SceneManager.LoadScene(sceneName);
+        }));
+        fade.FadeIn();
+    }
+
+    private IEnumerator Wait(float second, Action action)
+    {
+        yield return new WaitForSeconds(second);
+        action();
     }
 }
