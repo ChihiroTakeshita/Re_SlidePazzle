@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class Block : MonoBehaviour
 {
@@ -27,7 +29,7 @@ public class Block : MonoBehaviour
         offsetLeft = offsetRight * -1;
     }
 
-    private void OnMouseDown()
+    private async void OnMouseDown()
     {
         if(!freezing)
         {
@@ -40,8 +42,8 @@ public class Block : MonoBehaviour
                 Debug.Log(blockManager.deleteList.Count);
                 if (blockManager.deleteList.Count > 0)
                 {
-                    Debug.Log("Delete");
-                    blockManager.StartCoroutine(blockManager.Delete(0.3f));
+                    await CallDelete();
+                    //blockManager.Delete();
                 }
                 else
                 {
@@ -64,7 +66,7 @@ public class Block : MonoBehaviour
             transform.position += new Vector3(0, blockManager.blockSize);
             coodinate[0] = x;
             coodinate[1] = y + 1;
-            Debug.Log(blockManager.blockArray[x, y + 1].name);
+            Debug.Log($"Moved = {blockManager.blockArray[x, y + 1].name}");
         }
 
         RaycastHit2D hitDown = Physics2D.Raycast(transform.position + offsetDown, Vector2.down, 0.3f);
@@ -77,7 +79,7 @@ public class Block : MonoBehaviour
             transform.position += new Vector3(0, -blockManager.blockSize);
             coodinate[0] = x;
             coodinate[1] = y - 1;
-            Debug.Log(blockManager.blockArray[x, y - 1].name);
+            Debug.Log($"Moved = {blockManager.blockArray[x, y - 1].name}");
         }
 
         RaycastHit2D hitRight = Physics2D.Raycast(transform.position + offsetRight, Vector2.right, 0.3f);
@@ -90,7 +92,7 @@ public class Block : MonoBehaviour
             transform.position += new Vector3(blockManager.blockSize, 0);
             coodinate[0] = x + 1;
             coodinate[1] = y;
-            Debug.Log(blockManager.blockArray[x + 1, y].name);
+            Debug.Log($"Moved = {blockManager.blockArray[x + 1, y].name}");
         }
 
         RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + offsetLeft, Vector2.left, 0.3f);
@@ -103,7 +105,15 @@ public class Block : MonoBehaviour
             transform.position += new Vector3(-blockManager.blockSize, 0);
             coodinate[0] = x - 1;
             coodinate[1] = y;
-            Debug.Log(blockManager.blockArray[x - 1, y].name);
+            Debug.Log($"Moved = {blockManager.blockArray[x - 1, y].name}");
         }
+    }
+
+    private async UniTask CallDelete()
+    {
+        Debug.Log("Delete");
+        await UniTask.Delay(500);
+        blockManager.Delete();
+        Debug.Log("Finish Delete");
     }
 }

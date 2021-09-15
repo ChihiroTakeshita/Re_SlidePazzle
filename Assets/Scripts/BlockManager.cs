@@ -43,7 +43,7 @@ public class BlockManager : MonoBehaviour
             if(deleteList.Count > 0)
             {
                 Debug.Log("Delete");
-                StartCoroutine(Delete(0.0f));
+                Delete();
                 deleteList.Clear();
             }
             else
@@ -129,9 +129,8 @@ public class BlockManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Delete(float seconds)
+    public void Delete()
     {
-        yield return new WaitForSeconds(seconds);
         foreach (var item in deleteList)
         {
             blockArray[(int)(item.transform.position.x / blockSize), (int)(item.transform.position.y / blockSize)] = null;
@@ -148,7 +147,7 @@ public class BlockManager : MonoBehaviour
     private void SpawnNewBlock()
     {
         int r = Random.Range(0, 4);
-        Debug.Log(r);
+        Debug.Log($"Selected = {blocks[r].name}");
         var block = Instantiate(blocks[r]);
         block.transform.position = new Vector3(nextX * blockSize, nextY * blockSize);
         blockArray[nextX, nextY] = block;
