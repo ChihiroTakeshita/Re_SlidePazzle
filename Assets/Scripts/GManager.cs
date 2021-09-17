@@ -12,6 +12,9 @@ public class GManager : MonoBehaviour
 
     [SerializeField] public int defaultScore;
     [SerializeField] public float[] multiply;
+    [SerializeField] public float maxTime;
+
+    public bool freezing = false;
 
     private int m_score;
     private float m_time;

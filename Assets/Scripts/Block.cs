@@ -12,7 +12,6 @@ public class Block : MonoBehaviour
     Vector3 offsetUp, offsetDown, offsetRight, offsetLeft;
 
     public bool isMatching = false;
-    private static bool freezing = false;
     private static int interval = 0;
 
     private void Start()
@@ -28,11 +27,11 @@ public class Block : MonoBehaviour
 
     private async void OnMouseDown()
     {
-        if(!freezing)
+        if(!gameManager.freezing)
         {
             Move();
-            freezing = true;
-            while (freezing)
+            gameManager.freezing = true;
+            while (gameManager.freezing)
             {
                 Debug.Log("CheckMatching");
                 blockManager.CheckMatching();
@@ -62,7 +61,7 @@ public class Block : MonoBehaviour
                 {
                     interval++;
                     Debug.Log("Ready to move");
-                    freezing = false;
+                    gameManager.freezing = false;
                 }
             }
         }
