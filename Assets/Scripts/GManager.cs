@@ -17,7 +17,6 @@ public class GManager : MonoBehaviour
     public bool freezing = false;
 
     private int m_score;
-    private float m_time;
     private int m_countR;
     private int m_countG;
     private int m_countB;
@@ -29,7 +28,6 @@ public class GManager : MonoBehaviour
         {
             GameManager = this;
             DontDestroyOnLoad(this.gameObject);
-            AddScore(0);
         }
         else
         {
