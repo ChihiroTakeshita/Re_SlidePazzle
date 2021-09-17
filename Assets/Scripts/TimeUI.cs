@@ -11,18 +11,11 @@ public class TimeUI : MonoBehaviour
     GManager gameManager;
 
     private float currentTime;
-
-    // Start is called before the first frame update
-    async void Start()
+    public async void SetTimer()
     {
         gameManager = GManager.GameManager;
         currentTime = gameManager.maxTime;
-        while(currentTime >= 0)
-        {
-            await Timer();
-        }
-        Debug.Log("Time Up");
-        gameManager.freezing = true;
+        await Timer();
     }
 
     public void SetSlider(float time)
@@ -30,10 +23,18 @@ public class TimeUI : MonoBehaviour
         slider.value = time / gameManager.maxTime;
     }
 
-    private async UniTask Timer()
+    public async UniTask Timer()
     {
-        await UniTask.Delay(10);
-        currentTime -= 0.01f;
-        slider.value = currentTime / gameManager.maxTime;
+        float beforeUpdateTime = Time.time;
+        while(currentTime >= 0)
+        {
+            float currentUpdateTime = Time.time;
+            currentTime -= currentUpdateTime - beforeUpdateTime;
+            slider.value = currentTime / gameManager.maxTime;
+            beforeUpdateTime = currentUpdateTime;
+            await UniTask.DelayFrame(1);
+        }
+        Debug.Log("Time Up");
+        gameManager.freezing = true;
     }
 }

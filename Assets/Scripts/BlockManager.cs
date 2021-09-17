@@ -6,6 +6,7 @@ public class BlockManager : MonoBehaviour
 {
     public static BlockManager BManager { get; private set; }
 
+    [SerializeField] private TimeUI timer;
     [SerializeField] private GameObject[] blocks;
 
     private int width = 4;
@@ -52,6 +53,7 @@ public class BlockManager : MonoBehaviour
                 break;
             }
         }
+        timer.SetTimer();
     }
 
     private void SetBlocks()
