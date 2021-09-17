@@ -13,15 +13,12 @@ public class Block : MonoBehaviour
 
     public bool isMatching = false;
     private static bool freezing = false;
-
-    public int[] coodinate;
+    private static int interval = 0;
 
     private void Start()
     {
         gameManager = GManager.GameManager;
         blockManager = BlockManager.BManager;
-
-        coodinate = new int[] { (int)(transform.position.x / blockManager.blockSize), (int)(transform.position.y / blockManager.blockSize) };
 
         offsetUp = new Vector3(0, (blockManager.blockSize /2) + 0.01f);
         offsetDown = offsetUp * -1;
@@ -42,11 +39,28 @@ public class Block : MonoBehaviour
                 Debug.Log(blockManager.deleteList.Count);
                 if (blockManager.deleteList.Count > 0)
                 {
+                    int additionalScore;
+                    switch (interval)
+                    {
+                        case -1:
+                        case 0:
+                            additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[0]);
+                            break;
+                        case 1:
+                        case 2:
+                            additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[interval]);
+                            break;
+                        default:
+                            additionalScore = gameManager.defaultScore;
+                            break;
+                    }
+                    interval = -1;
                     await CallDelete();
-                    //blockManager.Delete();
+                    gameManager.AddScore(additionalScore);
                 }
                 else
                 {
+                    interval++;
                     Debug.Log("Ready to move");
                     freezing = false;
                 }
@@ -64,8 +78,6 @@ public class Block : MonoBehaviour
             blockManager.blockArray[x, y + 1] = this.gameObject;
             blockManager.blockArray[x, y] = null;
             transform.position += new Vector3(0, blockManager.blockSize);
-            coodinate[0] = x;
-            coodinate[1] = y + 1;
             Debug.Log($"Moved = {blockManager.blockArray[x, y + 1].name}");
         }
 
@@ -77,8 +89,6 @@ public class Block : MonoBehaviour
             blockManager.blockArray[x, y - 1] = this.gameObject;
             blockManager.blockArray[x, y] = null;
             transform.position += new Vector3(0, -blockManager.blockSize);
-            coodinate[0] = x;
-            coodinate[1] = y - 1;
             Debug.Log($"Moved = {blockManager.blockArray[x, y - 1].name}");
         }
 
@@ -90,8 +100,6 @@ public class Block : MonoBehaviour
             blockManager.blockArray[x + 1, y] = this.gameObject;
             blockManager.blockArray[x, y] = null;
             transform.position += new Vector3(blockManager.blockSize, 0);
-            coodinate[0] = x + 1;
-            coodinate[1] = y;
             Debug.Log($"Moved = {blockManager.blockArray[x + 1, y].name}");
         }
 
@@ -103,8 +111,6 @@ public class Block : MonoBehaviour
             blockManager.blockArray[x - 1, y] = this.gameObject;
             blockManager.blockArray[x, y] = null;
             transform.position += new Vector3(-blockManager.blockSize, 0);
-            coodinate[0] = x - 1;
-            coodinate[1] = y;
             Debug.Log($"Moved = {blockManager.blockArray[x - 1, y].name}");
         }
     }

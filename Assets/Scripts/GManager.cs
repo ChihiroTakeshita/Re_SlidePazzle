@@ -7,12 +7,18 @@ public class GManager : MonoBehaviour
 {
     public static GManager GameManager { get; private set; }
 
-    public static int score;
-    public static float time;
-    public static int countR;
-    public static int countG;
-    public static int countB;
-    public static int countY;
+    [SerializeField] ScoreUI scoreUI;
+    [SerializeField] SceneController sceneController;
+
+    [SerializeField] public int defaultScore;
+    [SerializeField] public float[] multiply;
+
+    private int m_score;
+    private float m_time;
+    private int m_countR;
+    private int m_countG;
+    private int m_countB;
+    private int m_countY;
 
     private void Awake()
     {
@@ -20,6 +26,7 @@ public class GManager : MonoBehaviour
         {
             GameManager = this;
             DontDestroyOnLoad(this.gameObject);
+            AddScore(0);
         }
         else
         {
@@ -27,9 +34,10 @@ public class GManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Wait(float seconds, Action action)
+    public void AddScore(int score)
     {
-        yield return new WaitForSeconds(seconds);
-        action();
+        m_score += score;
+        scoreUI.ShowScore(m_score);
+        Debug.Log($"AddScore {score}");
     }
 }
