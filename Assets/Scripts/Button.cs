@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResultButton : MonoBehaviour
+public class Button : MonoBehaviour
 {
     GManager gameManager;
 
@@ -20,5 +20,10 @@ public class ResultButton : MonoBehaviour
     public void OnClickRetry()
     {
         Debug.Log("Play Again");
+    }
+
+    public void OnClickMenu()
+    {
+        Debug.Log("Open Menu");
     }
 }
