@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 public class ScoreUI : MonoBehaviour
 {
@@ -15,27 +16,38 @@ public class ScoreUI : MonoBehaviour
         gameManager = GManager.GameManager;
     }
 
-    public void ShowScore(int currentScore)
+    public async void PrintScore(int currentScore, int addScore)
     {
-        if(currentScore < 10)
+        int printScore = currentScore;
+        for(int i = 0; i < addScore; i++)
         {
-            scoreText.text = $"0000{currentScore}";
+            printScore++;
+            if (printScore < 10)
+            {
+                scoreText.text = $"0000{printScore}";
+            }
+            else if (printScore < 100)
+            {
+                scoreText.text = $"000{printScore}";
+            }
+            else if (printScore < 1000)
+            {
+                scoreText.text = $"00{printScore}";
+            }
+            else if (printScore < 10000)
+            {
+                scoreText.text = $"0{printScore}";
+            }
+            else
+            {
+                scoreText.text = $"{printScore}";
+            }
+            await AddCurrent();
         }
-        else if (currentScore < 100)
-        {
-            scoreText.text = $"000{currentScore}";
-        }
-        else if (currentScore < 1000)
-        {
-            scoreText.text = $"00{currentScore}";
-        }
-        else if (currentScore < 10000)
-        {
-            scoreText.text = $"0{currentScore}";
-        }
-        else
-        {
-            scoreText.text = currentScore.ToString();
-        }
+    }
+
+    private async UniTask AddCurrent()
+    {
+        await UniTask.Delay(1);
     }
 }

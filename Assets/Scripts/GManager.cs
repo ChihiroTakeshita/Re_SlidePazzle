@@ -34,8 +34,9 @@ public class GManager : MonoBehaviour
 
     public void AddScore(int score)
     {
+        scoreUI.PrintScore(m_score, score);
         m_score += score;
-        scoreUI.ShowScore(m_score);
         Debug.Log($"AddScore {score}");
+        Debug.Log($"CurrentScore : {m_score}");
     }
 }
