@@ -46,14 +46,14 @@ public class Block : MonoBehaviour
                         {
                             case -1:
                             case 0:
-                                additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[0]);
+                                additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[0]) * blockManager.deleteList.Count;
                                 break;
                             case 1:
                             case 2:
-                                additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[interval]);
+                                additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[interval]) * blockManager.deleteList.Count;
                                 break;
                             default:
-                                additionalScore = gameManager.defaultScore;
+                                additionalScore = gameManager.defaultScore * blockManager.deleteList.Count;
                                 break;
                         }
                         interval = -1;
