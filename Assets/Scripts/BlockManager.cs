@@ -41,7 +41,7 @@ public class BlockManager : MonoBehaviour
         {
             Debug.Log("CheckMatching");
             CheckMatching();
-            if(deleteList.Count > 0)
+            if (deleteList.Count > 0)
             {
                 Debug.Log("Delete");
                 Delete();

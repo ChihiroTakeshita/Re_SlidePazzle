@@ -35,6 +35,7 @@ public class TimeUI : MonoBehaviour
             await UniTask.DelayFrame(1);
         }
         Debug.Log("Time Up");
+        gameManager.timeUp = true;
         gameManager.freezing = true;
     }
 }

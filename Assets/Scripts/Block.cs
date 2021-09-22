@@ -13,6 +13,7 @@ public class Block : MonoBehaviour
 
     public bool isMatching = false;
     private static int interval = 0;
+    private bool isMoved = false;
 
     private void Start()
     {
@@ -30,39 +31,48 @@ public class Block : MonoBehaviour
         if(!gameManager.freezing)
         {
             Move();
-            gameManager.freezing = true;
-            while (gameManager.freezing)
+            if(isMoved)
             {
-                Debug.Log("CheckMatching");
-                blockManager.CheckMatching();
-                Debug.Log(blockManager.deleteList.Count);
-                if (blockManager.deleteList.Count > 0)
+                gameManager.freezing = true;
+                while (true)
                 {
-                    int additionalScore;
-                    switch (interval)
+                    Debug.Log("CheckMatching");
+                    blockManager.CheckMatching();
+                    Debug.Log(blockManager.deleteList.Count);
+                    if (blockManager.deleteList.Count > 0)
                     {
-                        case -1:
-                        case 0:
-                            additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[0]);
-                            break;
-                        case 1:
-                        case 2:
-                            additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[interval]);
-                            break;
-                        default:
-                            additionalScore = gameManager.defaultScore;
-                            break;
+                        int additionalScore;
+                        switch (interval)
+                        {
+                            case -1:
+                            case 0:
+                                additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[0]);
+                                break;
+                            case 1:
+                            case 2:
+                                additionalScore = (int)(gameManager.defaultScore * gameManager.multiply[interval]);
+                                break;
+                            default:
+                                additionalScore = gameManager.defaultScore;
+                                break;
+                        }
+                        interval = -1;
+                        await CallDelete();
+                        gameManager.AddScore(additionalScore);
                     }
-                    interval = -1;
-                    await CallDelete();
-                    gameManager.AddScore(additionalScore);
+                    else
+                    {
+                        interval++;
+                        Debug.Log("Ready to move");
+                        Debug.Log($"interval:{interval}");
+                        if (!gameManager.timeUp)
+                        {
+                            gameManager.freezing = false;
+                        }
+                        break;
+                    }
                 }
-                else
-                {
-                    interval++;
-                    Debug.Log("Ready to move");
-                    gameManager.freezing = false;
-                }
+                isMoved = false;
             }
         }
     }
@@ -72,6 +82,7 @@ public class Block : MonoBehaviour
         RaycastHit2D hitUp = Physics2D.Raycast(transform.position + offsetUp, Vector2.up, 0.3f);
         if (!hitUp)
         {
+            isMoved = true;
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x, y + 1] = this.gameObject;
@@ -83,6 +94,7 @@ public class Block : MonoBehaviour
         RaycastHit2D hitDown = Physics2D.Raycast(transform.position + offsetDown, Vector2.down, 0.3f);
         if (!hitDown)
         {
+            isMoved = true;
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x, y - 1] = this.gameObject;
@@ -94,6 +106,7 @@ public class Block : MonoBehaviour
         RaycastHit2D hitRight = Physics2D.Raycast(transform.position + offsetRight, Vector2.right, 0.3f);
         if (!hitRight)
         {
+            isMoved = true;
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x + 1, y] = this.gameObject;
@@ -105,6 +118,7 @@ public class Block : MonoBehaviour
         RaycastHit2D hitLeft = Physics2D.Raycast(transform.position + offsetLeft, Vector2.left, 0.3f);
         if (!hitLeft)
         {
+            isMoved = true;
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x - 1, y] = this.gameObject;

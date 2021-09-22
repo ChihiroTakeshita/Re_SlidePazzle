@@ -27,22 +27,9 @@ public class SceneController : MonoBehaviour
     public async void SceneChange(string sceneName)
     {
         fade.FadeOut();
-        /*
-        StartCoroutine(Wait(1.3f, () => {
-            SceneManager.LoadScene(sceneName);
-        }));
-        */
         await WaitChange(1.3f, sceneName);
         fade.FadeIn();
     }
-
-    /*
-    private IEnumerator Wait(float second, Action action)
-    {
-        yield return new WaitForSeconds(second);
-        action();
-    }
-    */
 
     private async UniTask WaitChange(float seconds, string sceneName)
     {

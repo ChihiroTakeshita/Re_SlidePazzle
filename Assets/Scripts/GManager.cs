@@ -15,12 +15,9 @@ public class GManager : MonoBehaviour
     [SerializeField] public float maxTime;
 
     public bool freezing = false;
+    public bool timeUp = false;
 
     private int m_score;
-    private int m_countR;
-    private int m_countG;
-    private int m_countB;
-    private int m_countY;
 
     private void Awake()
     {
