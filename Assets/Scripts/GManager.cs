@@ -14,7 +14,7 @@ public class GManager : MonoBehaviour
     [SerializeField] public float[] multiply;
     [SerializeField] public float maxTime;
 
-    public bool freezing = false;
+    public bool freezing = true;
     public bool timeUp = false;
 
     private int m_score;
@@ -38,5 +38,11 @@ public class GManager : MonoBehaviour
         m_score += score;
         Debug.Log($"AddScore {score}");
         Debug.Log($"CurrentScore : {m_score}");
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        Debug.Log("Load " + sceneName);
+        //sceneController.SceneChange(sceneName);
     }
 }

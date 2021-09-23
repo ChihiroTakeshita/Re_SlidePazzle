@@ -6,14 +6,12 @@ using Cysharp.Threading.Tasks;
 
 public class ScoreUI : MonoBehaviour
 {
-    GManager gameManager;
-
     [SerializeField] TextMeshProUGUI scoreText;
 
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GManager.GameManager;
+        
     }
 
     public async void PrintScore(int currentScore, int addScore)

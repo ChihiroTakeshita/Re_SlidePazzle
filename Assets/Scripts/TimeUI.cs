@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 public class TimeUI : MonoBehaviour
 {
     [SerializeField] Slider slider;
+    [SerializeField] CountDown count;
 
     GManager gameManager;
 
@@ -37,5 +38,8 @@ public class TimeUI : MonoBehaviour
         Debug.Log("Time Up");
         gameManager.timeUp = true;
         gameManager.freezing = true;
+        count.TimeUp();
+        await UniTask.Delay(1500);
+        gameManager.LoadScene("Result");
     }
 }

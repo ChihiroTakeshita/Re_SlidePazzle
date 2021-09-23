@@ -6,8 +6,12 @@ public class BlockManager : MonoBehaviour
 {
     public static BlockManager BManager { get; private set; }
 
+    GManager gameManager;
+
+    [SerializeField] private GameObject effect;
     [SerializeField] private TimeUI timer;
     [SerializeField] private GameObject[] blocks;
+    [SerializeField] private CountDown count;
 
     private int width = 4;
     private int height = 4;
@@ -19,6 +23,8 @@ public class BlockManager : MonoBehaviour
 
     public int nextX;
     public int nextY;
+
+    private bool setting = true;
 
     private void Awake()
     {
@@ -33,8 +39,9 @@ public class BlockManager : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    async void Start()
     {
+        gameManager = GManager.GameManager;
         Debug.Log("SetBlocks");
         SetBlocks();
         while(true)
@@ -49,10 +56,13 @@ public class BlockManager : MonoBehaviour
             }
             else
             {
+                setting = false;
                 Debug.Log("Game Start!");
                 break;
             }
         }
+        await count.Count();
+        gameManager.freezing = false;
         timer.SetTimer();
     }
 
@@ -135,6 +145,13 @@ public class BlockManager : MonoBehaviour
     {
         foreach (var item in deleteList)
         {
+            if(!setting)
+            {
+                var instanse = Instantiate(effect);
+                Debug.Log("Instantiate " + instanse.name);
+                instanse.transform.position = new Vector3(item.transform.position.x, item.transform.position.y);
+                instanse.GetComponentInChildren<Effect>().PlayEffect(item.tag);
+            }
             blockArray[(int)(item.transform.position.x / blockSize), (int)(item.transform.position.y / blockSize)] = null;
             Destroy(item);
             nextX = (int)(item.transform.position.x / blockSize);
