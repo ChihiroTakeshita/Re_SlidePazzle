@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 public class Effect : MonoBehaviour
 {
+    [SerializeField] Color32[] colors;
     [SerializeField] ParticleSystem particle;
     ParticleSystem.MinMaxGradient color;
 
@@ -18,22 +20,22 @@ public class Effect : MonoBehaviour
     {
         if(block == "Red")
         {
-            color.color = new Color32(242, 77, 114, 255);
+            color.color = colors[0];
             Debug.Log("Change to Red");
         }
         else if(block == "Blue")
         {
-            color.color = new Color32(8, 200, 232, 255);
+            color.color = colors[1];
             Debug.Log("Change to Blue");
         }
         else if(block == "Green")
         {
-            color.color = new Color32(204, 255, 29, 255);
+            color.color = colors[2];
             Debug.Log("Change to Green");
         }
         else if(block == "Yerrow")
         {
-            color.color = new Color32(253, 245, 8, 255);
+            color.color = colors[3];
             Debug.Log("Change to Yerrow");
         }
         else
@@ -44,9 +46,10 @@ public class Effect : MonoBehaviour
         main.startColor = color;
         particle.Play();
     }
-    /*
-    private void OnParticleSystemStopped()
+
+    public void OnParticleSystemStopped()
     {
-        Destroy(gameObject);
-    }*/
+        Debug.Log("ParticleSystemStopped");
+        Destroy(this.gameObject);
+    }
 }

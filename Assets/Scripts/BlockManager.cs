@@ -149,7 +149,7 @@ public class BlockManager : MonoBehaviour
             {
                 var instanse = Instantiate(effect);
                 Debug.Log("Instantiate " + instanse.name);
-                instanse.transform.position = new Vector3(item.transform.position.x, item.transform.position.y);
+                instanse.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, -2);
                 instanse.GetComponentInChildren<Effect>().PlayEffect(item.tag);
             }
             blockArray[(int)(item.transform.position.x / blockSize), (int)(item.transform.position.y / blockSize)] = null;
