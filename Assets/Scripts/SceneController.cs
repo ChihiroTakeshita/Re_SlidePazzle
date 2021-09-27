@@ -7,7 +7,7 @@ using Cysharp.Threading.Tasks;
 
 public class SceneController : MonoBehaviour
 {
-    Fade fade;
+    public Fade fade;
     public static SceneController scene { get; private set; }
 
     private void Awake()
@@ -28,7 +28,6 @@ public class SceneController : MonoBehaviour
     {
         fade.FadeOut();
         await WaitChange(1.3f, sceneName);
-        fade.FadeIn();
     }
 
     private async UniTask WaitChange(float seconds, string sceneName)

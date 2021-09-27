@@ -9,10 +9,12 @@ public class CountDown : MonoBehaviour
     [SerializeField] TextMeshProUGUI count;
     [SerializeField] Animator animator;
 
+    SoundEffectManager sfx;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        sfx = SoundEffectManager.sfx;
     }
 
     public async UniTask Count()
@@ -24,10 +26,12 @@ public class CountDown : MonoBehaviour
             if(i == 0)
             {
                 count.text = "- Start -";
+                sfx.PlayStartSFX();
             }
             else
             {
                 count.text = "- " + i + " -";
+                sfx.PlayCountDownSFX();
             }
             await UniTask.Delay(1000);
         }
@@ -38,6 +42,7 @@ public class CountDown : MonoBehaviour
     public void TimeUp()
     {
         count.text = "- Time Up -";
+        sfx.PlayStartSFX();
         animator.SetBool("isTimeUp", true);
     }
 }

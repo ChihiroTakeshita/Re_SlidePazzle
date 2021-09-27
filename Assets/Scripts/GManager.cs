@@ -7,8 +7,8 @@ public class GManager : MonoBehaviour
 {
     public static GManager GameManager { get; private set; }
 
-    [SerializeField] ScoreUI scoreUI;
-    [SerializeField] SceneController sceneController;
+    public ScoreUI scoreUI;
+    SceneController sceneController;
 
     [SerializeField] public int defaultScore;
     [SerializeField] public float[] multiply;
@@ -17,7 +17,7 @@ public class GManager : MonoBehaviour
     public bool freezing = true;
     public bool timeUp = false;
 
-    private int m_score;
+    public int m_score { get; private set; }
 
     private void Awake()
     {
@@ -32,6 +32,16 @@ public class GManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        sceneController = SceneController.scene;
+        if(!PlayerPrefs.HasKey("highScore"))
+        {
+            PlayerPrefs.SetInt("highScore", 0);
+            PlayerPrefs.SetInt("isFirst", 0);
+        }
+    }
+
     public void AddScore(int score)
     {
         scoreUI.PrintScore(m_score, score);
@@ -40,9 +50,23 @@ public class GManager : MonoBehaviour
         Debug.Log($"CurrentScore : {m_score}");
     }
 
-    public void LoadScene(string sceneName)
+    public void LoadTitle()
     {
-        Debug.Log("Load " + sceneName);
-        //sceneController.SceneChange(sceneName);
+        Debug.Log("Load Title");
+        sceneController.SceneChange("Title");
+    }
+
+    public void LoadGame()
+    {
+        Debug.Log("Load Game");
+        m_score = 0;
+        timeUp = false;
+        sceneController.SceneChange("Game");
+    }
+
+    public void LoadResult()
+    {
+        Debug.Log("Load Result");
+        sceneController.SceneChange("Result");
     }
 }

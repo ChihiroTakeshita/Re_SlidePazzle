@@ -9,6 +9,8 @@ TagManager:
   - Red
   - Green
   - Yerrow
+  - ScoreUI
+  - TitleUI
   layers:
   - Default
   - TransparentFX

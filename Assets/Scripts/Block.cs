@@ -8,6 +8,7 @@ public class Block : MonoBehaviour
 {
     GManager gameManager;
     BlockManager blockManager;
+    SoundEffectManager sfx;
 
     Vector3 offsetUp, offsetDown, offsetRight, offsetLeft;
 
@@ -19,6 +20,7 @@ public class Block : MonoBehaviour
     {
         gameManager = GManager.GameManager;
         blockManager = BlockManager.BManager;
+        sfx = SoundEffectManager.sfx;
 
         offsetUp = new Vector3(0, (blockManager.blockSize /2) + 0.01f);
         offsetDown = offsetUp * -1;
@@ -83,6 +85,7 @@ public class Block : MonoBehaviour
         if (!hitUp)
         {
             isMoved = true;
+            sfx.PlayMoveBlockSFX();
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x, y + 1] = this.gameObject;
@@ -95,6 +98,7 @@ public class Block : MonoBehaviour
         if (!hitDown)
         {
             isMoved = true;
+            sfx.PlayMoveBlockSFX();
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x, y - 1] = this.gameObject;
@@ -107,6 +111,7 @@ public class Block : MonoBehaviour
         if (!hitRight)
         {
             isMoved = true;
+            sfx.PlayMoveBlockSFX();
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x + 1, y] = this.gameObject;
@@ -119,6 +124,7 @@ public class Block : MonoBehaviour
         if (!hitLeft)
         {
             isMoved = true;
+            sfx.PlayMoveBlockSFX();
             var x = (int)(transform.position.x / blockManager.blockSize);
             var y = (int)(transform.position.y / blockManager.blockSize);
             blockManager.blockArray[x - 1, y] = this.gameObject;
@@ -133,6 +139,7 @@ public class Block : MonoBehaviour
         Debug.Log("Delete");
         await UniTask.Delay(500);
         blockManager.Delete();
+        sfx.PlayDeleteBlockSFX();
         Debug.Log("Finish Delete");
     }
 }

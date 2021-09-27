@@ -4,30 +4,27 @@ using UnityEngine;
 
 public class Fade : MonoBehaviour
 {
-    public static Fade fade { get; private set; }
-    private Animator animator;
+    SceneController scene;
 
-    void Awake()
+    public static Fade fade { get; private set; }
+    [SerializeField] private Animator animator;
+
+    private void Start()
     {
-        if(fade == null)
-        {
-            DontDestroyOnLoad(this.gameObject);
-            fade = this;
-            animator = GetComponent<Animator>();
-        }
-        else
-        {
-            Destroy(this.gameObject);
-        }
+        scene = SceneController.scene;
+        scene.fade = this;
+        FadeIn();
     }
 
     public void FadeIn()
     {
         animator.SetBool("isFadeIn", true);
+        Debug.Log("Fade In");
     }
 
     public void FadeOut()
     {
         animator.SetBool("isFadeIn", false);
+        Debug.Log("Fade Out");
     }
 }

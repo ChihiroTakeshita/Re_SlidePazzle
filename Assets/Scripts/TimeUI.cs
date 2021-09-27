@@ -40,6 +40,6 @@ public class TimeUI : MonoBehaviour
         gameManager.freezing = true;
         count.TimeUp();
         await UniTask.Delay(1500);
-        gameManager.LoadScene("Result");
+        gameManager.LoadResult();
     }
 }
