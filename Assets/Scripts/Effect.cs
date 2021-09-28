@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Cysharp.Threading.Tasks;
+﻿using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
@@ -21,22 +18,18 @@ public class Effect : MonoBehaviour
         if(block == "Red")
         {
             color.color = colors[0];
-            Debug.Log("Change to Red");
         }
         else if(block == "Blue")
         {
             color.color = colors[1];
-            Debug.Log("Change to Blue");
         }
         else if(block == "Green")
         {
             color.color = colors[2];
-            Debug.Log("Change to Green");
         }
         else if(block == "Yerrow")
         {
             color.color = colors[3];
-            Debug.Log("Change to Yerrow");
         }
         else
         {
@@ -49,7 +42,6 @@ public class Effect : MonoBehaviour
 
     public void OnParticleSystemStopped()
     {
-        Debug.Log("ParticleSystemStopped");
         Destroy(this.gameObject);
     }
 }

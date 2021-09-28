@@ -44,12 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreUI: {fileID: 0}
-  sceneController: {fileID: 0}
   defaultScore: 100
   multiply:
   - 2
   - 1.7
   - 1.3
-  maxTime: 120
+  maxTime: 65
   freezing: 1
   timeUp: 0

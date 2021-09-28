@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Fade : MonoBehaviour
 {
@@ -19,12 +17,10 @@ public class Fade : MonoBehaviour
     public void FadeIn()
     {
         animator.SetBool("isFadeIn", true);
-        Debug.Log("Fade In");
     }
 
     public void FadeOut()
     {
         animator.SetBool("isFadeIn", false);
-        Debug.Log("Fade Out");
     }
 }

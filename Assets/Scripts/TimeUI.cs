@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
 
@@ -35,7 +33,6 @@ public class TimeUI : MonoBehaviour
             beforeUpdateTime = currentUpdateTime;
             await UniTask.DelayFrame(1);
         }
-        Debug.Log("Time Up");
         gameManager.timeUp = true;
         gameManager.freezing = true;
         count.TimeUp();

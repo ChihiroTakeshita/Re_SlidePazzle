@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockManager : MonoBehaviour
@@ -42,22 +41,18 @@ public class BlockManager : MonoBehaviour
     async void Start()
     {
         gameManager = GManager.GameManager;
-        Debug.Log("SetBlocks");
         SetBlocks();
         while(true)
         {
-            Debug.Log("CheckMatching");
             CheckMatching();
             if (deleteList.Count > 0)
             {
-                Debug.Log("Delete");
                 Delete();
                 deleteList.Clear();
             }
             else
             {
                 setting = false;
-                Debug.Log("Game Start!");
                 break;
             }
         }
@@ -148,7 +143,6 @@ public class BlockManager : MonoBehaviour
             if(!setting)
             {
                 var instanse = Instantiate(effect);
-                Debug.Log("Instantiate " + instanse.name);
                 instanse.transform.position = new Vector3(item.transform.position.x, item.transform.position.y, -2);
                 instanse.GetComponentInChildren<Effect>().PlayEffect(item.tag);
             }
@@ -166,7 +160,6 @@ public class BlockManager : MonoBehaviour
     private void SpawnNewBlock()
     {
         int r = Random.Range(0, 4);
-        Debug.Log($"Selected = {blocks[r].name}");
         var block = Instantiate(blocks[r]);
         block.transform.position = new Vector3(nextX * blockSize, nextY * blockSize);
         blockArray[nextX, nextY] = block;

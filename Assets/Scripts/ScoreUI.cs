@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
 using TMPro;
-using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class ScoreUI : MonoBehaviour
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GManager : MonoBehaviour
 {
@@ -46,19 +43,15 @@ public class GManager : MonoBehaviour
     {
         scoreUI.PrintScore(m_score, score);
         m_score += score;
-        Debug.Log($"AddScore {score}");
-        Debug.Log($"CurrentScore : {m_score}");
     }
 
     public void LoadTitle()
     {
-        Debug.Log("Load Title");
         sceneController.SceneChange("Title");
     }
 
     public void LoadGame()
     {
-        Debug.Log("Load Game");
         m_score = 0;
         timeUp = false;
         sceneController.SceneChange("Game");
@@ -66,7 +59,6 @@ public class GManager : MonoBehaviour
 
     public void LoadResult()
     {
-        Debug.Log("Load Result");
         sceneController.SceneChange("Result");
     }
 }

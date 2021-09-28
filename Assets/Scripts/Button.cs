@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
-using TMPro;
 
 public class Button : MonoBehaviour
 {
@@ -27,14 +25,12 @@ public class Button : MonoBehaviour
     public void OnClickToTitle()
     {
         sfx.PlayClickSFX();
-        Debug.Log("Back to Title");
         gameManager.LoadTitle();
     }
 
     public void OnClickStartGame()
     {
         sfx.PlayClickSFX();
-        Debug.Log("Let's Play");
         gameManager.LoadGame();
     }
 
@@ -44,7 +40,6 @@ public class Button : MonoBehaviour
         title.SetActive(false);
         logo.SetActive(false);
         demo.SetActive(true);
-        Debug.Log("Open Menu");
     }
 
     public void OnClickCloseMenu()
@@ -53,7 +48,6 @@ public class Button : MonoBehaviour
         title.SetActive(true);
         logo.SetActive(true);
         sfx.PlayClickSFX();
-        Debug.Log("Close Menu");
     }
 
     public void OnClickResetYes()
