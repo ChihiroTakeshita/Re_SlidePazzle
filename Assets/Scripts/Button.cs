@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Button : MonoBehaviour
 {
@@ -9,6 +10,12 @@ public class Button : MonoBehaviour
 
     [SerializeField] GameObject title;
     [SerializeField] GameObject demo;
+    [SerializeField] GameObject logo;
+
+    [SerializeField] GameObject reset;
+    [SerializeField] GameObject[] resetBottun;
+    [SerializeField] GameObject afterReset;
+    [SerializeField] TextMeshProUGUI text;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +42,7 @@ public class Button : MonoBehaviour
     {
         sfx.PlayClickSFX();
         title.SetActive(false);
+        logo.SetActive(false);
         demo.SetActive(true);
         Debug.Log("Open Menu");
     }
@@ -43,7 +51,28 @@ public class Button : MonoBehaviour
     {
         demo.SetActive(false);
         title.SetActive(true);
+        logo.SetActive(true);
         sfx.PlayClickSFX();
         Debug.Log("Close Menu");
+    }
+
+    public void OnClickResetYes()
+    {
+        sfx.PlayClickSFX();
+        PlayerPrefs.SetInt("highScore", 0);
+        foreach (var item in resetBottun)
+        {
+            item.SetActive(false);
+        }
+        afterReset.SetActive(true);
+        text.text = "リセットしました";
+    }
+
+    public void OnClickResetNo()
+    {
+        sfx.PlayClickSFX();
+        reset.SetActive(false);
+        title.SetActive(true);
+        logo.SetActive(true);
     }
 }
