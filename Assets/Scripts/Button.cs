@@ -50,6 +50,14 @@ public class Button : MonoBehaviour
         sfx.PlayClickSFX();
     }
 
+    public void OnClickReset()
+    {
+        sfx.PlayClickSFX();
+        title.SetActive(false);
+        logo.SetActive(false);
+        reset.SetActive(true);
+    }
+
     public void OnClickResetYes()
     {
         sfx.PlayClickSFX();
