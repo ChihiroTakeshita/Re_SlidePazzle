@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class BlockManager : MonoBehaviour
 {
@@ -124,16 +125,7 @@ public class BlockManager : MonoBehaviour
             }
         }
 
-        foreach (var item in blockArray)
-        {
-            if(item != null)
-            {
-                if(item.GetComponent<Block>().isMatching)
-                {
-                    deleteList.Add(item);
-                }
-            }
-        }
+        blockArray.Cast<GameObject>().Where(go => go != null && go.GetComponent<Block>().isMatching).ToList().ForEach(go => deleteList.Add(go));
     }
 
     public void Delete()
