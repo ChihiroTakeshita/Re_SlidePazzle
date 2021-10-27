@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class TimeUI : MonoBehaviour
 {
@@ -10,33 +11,22 @@ public class TimeUI : MonoBehaviour
     GManager gameManager;
 
     private float currentTime;
-    public async void SetTimer()
+    public void SetTimer()
     {
         gameManager = GManager.GameManager;
         currentTime = gameManager.maxTime;
-        await Timer();
+        SetSlider();
     }
 
-    public void SetSlider(float time)
+    void SetSlider()
     {
-        slider.value = time / gameManager.maxTime;
-    }
-
-    public async UniTask Timer()
-    {
-        float beforeUpdateTime = Time.time;
-        while(currentTime >= 0)
+        DOTween.To(() => slider.value, x => slider.value = x, 0, gameManager.maxTime).OnComplete(async () =>
         {
-            float currentUpdateTime = Time.time;
-            currentTime -= currentUpdateTime - beforeUpdateTime;
-            slider.value = currentTime / gameManager.maxTime;
-            beforeUpdateTime = currentUpdateTime;
-            await UniTask.DelayFrame(1);
-        }
-        gameManager.timeUp = true;
-        gameManager.freezing = true;
-        count.TimeUp();
-        await UniTask.Delay(1500);
-        gameManager.LoadResult();
+            gameManager.timeUp = true;
+            gameManager.freezing = true;
+            count.TimeUp();
+            await UniTask.Delay(1500);
+            gameManager.LoadResult();
+        });
     }
 }

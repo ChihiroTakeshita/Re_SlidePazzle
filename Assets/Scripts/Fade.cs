@@ -7,6 +7,11 @@ public class Fade : MonoBehaviour
     public static Fade fade { get; private set; }
     [SerializeField] private Animator animator;
 
+    private void Awake()
+    {
+        fade = this;
+    }
+
     private void Start()
     {
         scene = SceneController.scene;

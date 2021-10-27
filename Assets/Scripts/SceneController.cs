@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Cysharp.Threading.Tasks;
 
 public class SceneController : MonoBehaviour
 {
@@ -16,7 +13,6 @@ public class SceneController : MonoBehaviour
         {
             scene = this;
             DontDestroyOnLoad(this.gameObject);
-            fade = Fade.fade;
         }
         else
         {
